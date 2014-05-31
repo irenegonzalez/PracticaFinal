@@ -15,7 +15,7 @@ import java.util.GregorianCalendar;
 public class Lote implements Comparable<Lote>{
     private String nombre;
     private double p;
-
+//kk
     private enum tipo {conReceta, sinReceta};
     private ArrayList PpoAct = new ArrayList<>();
     private int udFcdas;
