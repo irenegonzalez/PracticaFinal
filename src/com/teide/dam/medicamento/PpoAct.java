@@ -20,7 +20,7 @@ public class PpoAct {
           @Override 
     public boolean equals(Object obj) {
         PpoAct p = (PpoAct) obj;
-        return nomPpoAct.equals(p.nomPpoAct);
+        return nomPpoAct.contains(p.nomPpoAct);
     } 
 
 
