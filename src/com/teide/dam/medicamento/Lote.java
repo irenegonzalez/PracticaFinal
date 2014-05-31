@@ -4,6 +4,7 @@
  */
 package com.teide.dam.medicamento;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -15,19 +16,34 @@ import java.util.GregorianCalendar;
 public class Lote implements Comparable<Lote>{
     private String nombre;
     private double p;
-//kk
-    private enum tipo {conReceta, sinReceta};
+    private enum tiposLotes {conReceta, sinReceta};
+    private tiposLotes tipo;  
     private ArrayList PpoAct = new ArrayList<>();
     private int udFcdas;
-    private int fecFab;
-    private int fecCad;
+    private GregorianCalendar fecFab;
+    private GregorianCalendar fecCad;
+//    private Calendar fecFab;
+//    private Calendar fecCad;
 
-    public Lote(String nombre, int udFcdas) {
+    public Lote(String nombre, int udFcdas, ArrayList ppoAct, tiposLotes tipo, double p) {
         this.nombre = nombre;
         this.udFcdas = udFcdas;
-        Calendar fecFab = Calendar.getInstance(); //No estoy segura de que las fechas estÃ©n bien, las he puesto hetInstance para que me digan la fecha de hoy y a la de caduzidad le he sumado un aÃ±o, y las he metido dentro del constructor porque dijo antonio que se podÃ­a, si se te ocurreo otra forma me avisas
-        Calendar fecCad = Calendar.getInstance();
-        fecCad.add(Calendar.YEAR, +1);
+        this.PpoAct=ppoAct;    
+        this.tipo=tipo;
+// ¿Con esto basta para que luego coja "conReceta" o "sinReceta"?   
+        this.p=p;
+
+        this.fecFab = new GregorianCalendar();
+        this.fecCad = new GregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("'día' dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss");
+        sdf.format(fecFab.getTime());
+        sdf.format(fecCad.getTime());
+        fecCad.add(GregorianCalendar.YEAR, +1);
+ //¿Es correcto que vaya el objeto sdf en el constructor?
+ //Preguntarle a Antonio cuál es la diferencia y cuál está mejor.
+//        this.fecFab = Calendar.getInstance(); 
+//        this.fecCad = Calendar.getInstance();
+//        fecCad.add(Calendar.YEAR, +1);
     }
 
     public String getNombre() {
@@ -46,11 +62,15 @@ public class Lote implements Comparable<Lote>{
         return udFcdas;
     }
 
-    public int getFecFab() {
+    public tiposLotes getTipo() {
+        return tipo;
+    }
+
+    public GregorianCalendar getFecFab() {
         return fecFab;
     }
 
-    public int getFecCad() {
+    public GregorianCalendar getFecCad() {
         return fecCad;
     }
 
@@ -61,19 +81,16 @@ public class Lote implements Comparable<Lote>{
     public void setUdFcdas(int udFcdas) {
         this.udFcdas = udFcdas;
     }
-    
-    
+        
       @Override 
     public boolean equals(Object obj) {
         Lote l = (Lote) obj;
-        return nombre.equals(l.nombre);
+        return nombre.contains(l.nombre);
     }  
       
          @Override
     public int compareTo(Lote o) {
-        if (fecCad>o.fecCad) return 1;
-        else if (fecCad < o.fecCad) return -1;
-        else return 0;
+        return o.fecCad.compareTo(fecCad);
     }  
     
 }
