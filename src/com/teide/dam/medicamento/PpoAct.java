@@ -12,10 +12,30 @@ public class PpoAct {
     private  String nomPpoAct;
     private  double mg;
 
+    public PpoAct() {
+    }
+
     public PpoAct(String nomPpoAct, double mg) {
         this.nomPpoAct = nomPpoAct;
         this.mg = mg;
     }
+
+    public String getNomPpoAct() {
+        return nomPpoAct;
+    }
+
+    public double getMg() {
+        return mg;
+    }
+
+    public void setNomPpoAct(String nomPpoAct) {
+        this.nomPpoAct = nomPpoAct;
+    }
+
+    public void setMg(double mg) {
+        this.mg = mg;
+    }
+    
     
           @Override 
     public boolean equals(Object obj) {
