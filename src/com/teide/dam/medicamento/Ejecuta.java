@@ -4,6 +4,7 @@
  */
 package com.teide.dam.medicamento;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -44,7 +45,13 @@ public class Ejecuta {
                     String nombreP = s.nextLine();
                     System.out.println("Introduce los mg del principio activo");
                     double mg = s.nextDouble();
-                    Lote l = new Lote();
+                   
+                    ArrayList<PpoAct> ppo = new ArrayList<>();
+                    crearPpo(ppo);
+                    ppo.add(nombreP);
+                    ppo.add(mg);
+                    
+                    Lote l = new Lote(nombre, unidades, ppo, tipo, precio);
                     p.alta(l);
                     System.out.println("El medicamento se a dado de alta correctamente");
                     break;

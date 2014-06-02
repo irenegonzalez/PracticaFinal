@@ -49,8 +49,7 @@ public class Produccion {
    
    public void crearPpo(ArrayList ppo){
       Lote l = new Lote();
-      l.setPpoAct(ppo);
-      
+      l.setPpoAct(ppo);      
    }
    
    
