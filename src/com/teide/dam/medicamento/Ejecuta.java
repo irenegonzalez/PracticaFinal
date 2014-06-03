@@ -45,13 +45,13 @@ public class Ejecuta {
                     String nombreP = s.nextLine();
                     System.out.println("Introduce los mg del principio activo");
                     double mg = s.nextDouble();
-                   
-                    ArrayList<PpoAct> ppo = new ArrayList<>();
-                    crearPpo(ppo);
-                    ppo.add(nombreP);
-                    ppo.add(mg);
                     
-                    Lote l = new Lote(nombre, unidades, ppo, tipo, precio);
+                    ArrayList<PpoAct> ppo = new ArrayList<>();
+                    p.crearPpo(ppo);
+                    p.ppo.add(nombreP);
+                    p.ppo.add(mg);
+                    
+                    Lote l = new Lote(nombre , precio ,tipo, unidades, ppo);
                     p.alta(l);
                     System.out.println("El medicamento se a dado de alta correctamente");
                     break;
@@ -75,10 +75,28 @@ public class Ejecuta {
                 case 5: {
                     System.out.println("Introduce el nombre del lote");
                     String nombre = s.nextLine();
+                    System.out.println("Introduce las unidades");
+                    int unidades = s.nextInt();
+                    p.venderXNombreLote(nombre, unidades);
+                    if(p.venderXNombreLote(nombre, unidades)==false) System.out.println("No hay stock");
+                    else { //Pregunta si es con o sin receta   hay que cambiar lo que devuelve vender??
+                        
+                        
+                    }
                     break;
                 }
                 case 6: {
-                   
+                   System.out.println("Introduce el nombre del lote");
+                    String nombre = s.nextLine();
+                    System.out.println("Introduce las unidades");
+                    int unidades = s.nextInt();
+                    p.venderXNombrePpo(nombre, unidades);
+                    if(p.venderXNombrePpo(nombre, unidades)==false) System.out.println("No hay stock");
+                    else { //Pregunta si es con o sin receta   hay que cambiar lo que devuelve vender??
+                        
+                        
+                    }
+                    break;
                 }
                 case 7: {
                   System.out.println("Introduce el nombre del medicamento");
