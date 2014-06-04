@@ -27,7 +27,7 @@ public class Ejecuta {
             System.out.println("8. Salir");
             opcion = s.nextInt();
             s.nextLine();
-            switch (opcion) {
+             switch (opcion) {
                 case 1: {
                     p.limpiarStock();
                     break;
@@ -37,30 +37,41 @@ public class Ejecuta {
                     String nombre = s.nextLine();
                     System.out.println("Introduce el precio del lote");
                     int precio = s.nextInt();
-                    System.out.println("Introduce el tipo de lote");
-                    String tipo = s.nextLine();
                     System.out.println("Introduce las unidades del medicamento");
                     int unidades = s.nextInt();
-                    System.out.println("Introduce el nombre del principio activo");
-                    String nombreP = s.nextLine();
-                    System.out.println("Introduce los mg del principio activo");
-                    double mg = s.nextDouble();
-                    
                     ArrayList<PpoAct> ppo = new ArrayList<>();
-                    p.crearPpo(ppo);
-                    p.ppo.add(nombreP);
-                    p.ppo.add(mg);
                     
-                    Lote l = new Lote(nombre , precio ,tipo, unidades, ppo);
-                    p.alta(l);
+                    System.out.println("¿cuantos principios tiene?");
+                    int cantidad = s.nextInt();
+                    do{
+                        System.out.println("Introduce el nombre del principio activo");
+                        String nombreP = s.nextLine();
+                        System.out.println("Introduce los mg del principio activo");
+                        double mg = s.nextDouble();
+                        PpoAct principio = new PpoAct(nombreP, mg);
+                        ppo.add(principio);
+                    }
+                    while (cantidad==0);
+                    
+                    System.out.println("Indica si el lote es con receta 1 o sin receta 2");
+                    int tip = s.nextInt();
+                    //Pedir con o sin receta
+                    if (tip==1){Lote l = new Lote(nombre ,unidades, ppo, Lote.TipoLote.conReceta, precio);
+                        p.alta(l);
+                    }
+                    
+                    else {Lote l = new Lote(nombre ,unidades, ppo, Lote.TipoLote.sinReceta, precio);
+                        p.alta(l);
+                    }
+                    
                     System.out.println("El medicamento se a dado de alta correctamente");
                     break;
                 }
                 case 3: {
                     System.out.println("Introduce el nombre del lote");
                     String nombre = s.nextLine();
-                    boolean aux = p.buscarXNombreLote(nombre);
-                    if (aux==false) System.out.println("El lote no existe");
+                    String aux = p.buscarXNombreLote(nombre);
+                    if (aux==null) System.out.println("El lote no existe");
                     else System.out.println(aux);
                     break;
                 }

@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
  * @author Irene
  */
 public class Lote implements Comparable<Lote>{
-      private String nombre;
+    private String nombre;
     private double p;
     public enum TipoLote {conReceta, sinReceta};
     private TipoLote tipo;  
