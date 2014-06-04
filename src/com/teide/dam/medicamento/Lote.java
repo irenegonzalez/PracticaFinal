@@ -39,6 +39,16 @@ public class Lote implements Comparable<Lote>{
         fecCad.add(GregorianCalendar.YEAR, +1);
     }
 
+    public Lote(String nombre, TipoLote tipo) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+    }
+    
+    public Lote(String nombre) {
+        this.nombre = nombre;
+    }
+    
+
     public String getNombre() {
         return nombre;
     }

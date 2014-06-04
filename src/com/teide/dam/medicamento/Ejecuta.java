@@ -15,7 +15,8 @@ public class Ejecuta {
     public static void main(String[] args) {
      Scanner s=new Scanner (System.in);
         Produccion p = new Produccion();
-         int opcion = 0;
+         int opcion;
+         int tip=0;
           do{
             System.out.println("1. Arrancar");
             System.out.println("2. Alta lote");
@@ -44,6 +45,8 @@ public class Ejecuta {
                     System.out.println("¿cuantos principios tiene?");
                     int cantidad = s.nextInt();
                     do{
+                        s.nextLine();
+                        cantidad--; 
                         System.out.println("Introduce el nombre del principio activo");
                         String nombreP = s.nextLine();
                         System.out.println("Introduce los mg del principio activo");
@@ -51,36 +54,36 @@ public class Ejecuta {
                         PpoAct principio = new PpoAct(nombreP, mg);
                         ppo.add(principio);
                     }
-                    while (cantidad==0);
+                    while (cantidad>0);
                     
                     System.out.println("Indica si el lote es con receta 1 o sin receta 2");
-                    int tip = s.nextInt();
+                    tip = s.nextInt();
                     //Pedir con o sin receta
                     if (tip==1){Lote l = new Lote(nombre ,unidades, ppo, Lote.TipoLote.conReceta, precio);
-                        p.alta(l);
+                        if (p.alta(l)==true) System.out.println("El medicamento se a dado de alta correctamente");
+                        else System.out.println("No se a podido dar de alta");
                     }
                     
                     else {Lote l = new Lote(nombre ,unidades, ppo, Lote.TipoLote.sinReceta, precio);
-                        p.alta(l);
+                        if (p.alta(l)==true) System.out.println("El medicamento se a dado de alta correctamente");
+                        else System.out.println("No se a podido dar de alta");
                     }
-                    
-                    System.out.println("El medicamento se a dado de alta correctamente");
                     break;
                 }
                 case 3: {
                     System.out.println("Introduce el nombre del lote");
                     String nombre = s.nextLine();
-                    Lote aux = p.buscarXNombreLote(nombre);
-                    if (aux==null) System.out.println("El lote no existe");
-                    else System.out.println(aux);
+                    Lote l = new Lote(nombre ,Lote.TipoLote.conReceta);
+                    if (nombre.equals(l.getNombre())) System.out.println(p.buscarXNombreLote(nombre)); 
+                    else System.out.println("El lote no existe");
                     break;
                 }
                 case 4: {
                     System.out.println("Introduce el nombre del principio activo");
                     String nombre = s.nextLine();
-                    boolean aux = p.buscarXNombrePpo(nombre);
-                    if (aux==false) System.out.println("El principio activo no existe");
-                    else System.out.println(aux);
+                    Lote l = new Lote(nombre);
+                    if (nombre.equals(l.getNombre())) System.out.println(p.buscarXNombrePpo(nombre)); 
+                    else System.out.println("El principio activo no existe");
                     break;
                 }
                 case 5: {
@@ -90,9 +93,21 @@ public class Ejecuta {
                     int unidades = s.nextInt();
                     p.venderXNombreLote(nombre, unidades);
                     if(p.venderXNombreLote(nombre, unidades)==false) System.out.println("No hay stock");
-                    else { //Pregunta si es con o sin receta   hay que cambiar lo que devuelve vender??
+                    
+                    else { 
+                        if (tip==1){
+                            System.out.println("¿Tienes la receta? 1 Si/2 No");
+                            int receta = s.nextInt();
+                            if (receta==1) {
+                                p.venderXNombreLote(nombre, unidades);
+                                System.out.println("Lote vendido");
+                            }
+                            else System.out.println("No se vende sin receta");
+                        }
                         
-                        
+                        else {p.venderXNombreLote(nombre, unidades);
+                            System.out.println("Lote vendido");
+                        }
                     }
                     break;
                 }
@@ -103,18 +118,28 @@ public class Ejecuta {
                     int unidades = s.nextInt();
                     p.venderXNombrePpo(nombre, unidades);
                     if(p.venderXNombrePpo(nombre, unidades)==false) System.out.println("No hay stock");
-                    else { //Pregunta si es con o sin receta   hay que cambiar lo que devuelve vender??
-                        
-                        
+                    else { 
+                        if (tip==1){
+                            System.out.println("¿Tienes la receta? 1 Si/2 No");
+                            int receta = s.nextInt();
+                            if (receta==1) {
+                                p.venderXNombreLote(nombre, unidades);
+                                System.out.println("Lote vendido");
+                            }
+                            else System.out.println("No se vende sin receta");
+                        }
+                        else {p.venderXNombreLote(nombre, unidades);
+                            System.out.println("Lote vendido");
+                        }
+
                     }
                     break;
                 }
                 case 7: {
                   System.out.println("Introduce el nombre del medicamento");
-                  String nombre = s.nextLine(); 
-                  boolean aux = p.borrar(nombre);
-                  if (aux==false) System.out.println("El medicamento no existe");
-                  else System.out.println("Se ha borrado correctamente");
+                  String nombre = s.nextLine();
+                  if (p.borrar(nombre)==true) System.out.println("Se ha borrado correctamente");
+                  else System.out.println("El medicamento no existe"); 
                   break;
                 }
             }
