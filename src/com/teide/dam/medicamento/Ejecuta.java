@@ -70,7 +70,7 @@ public class Ejecuta {
                 case 3: {
                     System.out.println("Introduce el nombre del lote");
                     String nombre = s.nextLine();
-                    String aux = p.buscarXNombreLote(nombre);
+                    Lote aux = p.buscarXNombreLote(nombre);
                     if (aux==null) System.out.println("El lote no existe");
                     else System.out.println(aux);
                     break;
