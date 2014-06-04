@@ -6,7 +6,6 @@ package com.teide.dam.medicamento;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,39 +13,30 @@ import java.util.GregorianCalendar;
  * @author Irene
  */
 public class Lote implements Comparable<Lote>{
-    private String nombre;
+      private String nombre;
     private double p;
-    private enum tipoLote {conReceta, sinReceta};
-    private tipoLote tipo;  
-    private ArrayList ppoAct = new ArrayList<>();
+    public enum TipoLote {conReceta, sinReceta};
+    private TipoLote tipo;  
+    private ArrayList<PpoAct> ppoAct = new ArrayList<>();
     private int udFcdas;
     private GregorianCalendar fecFab;
     private GregorianCalendar fecCad;
-
-    //    private Calendar fecCad;
-    //    private Calendar fecCad;
+    
     public Lote() {
     }
 
-    public Lote(String nombre, int udFcdas, ArrayList ppoAct, tipoLote tipo, double p) {
+    public Lote(String nombre, int udFcdas, ArrayList ppoAct, TipoLote tipo, double p) {
         this.nombre = nombre;
         this.udFcdas = udFcdas;
         this.ppoAct=ppoAct;    
-        this.tipo=tipo;
-// �Con esto basta para que luego coja "conReceta" o "sinReceta"?   
+        this.tipo=tipo;  
         this.p=p;
-
         this.fecFab = new GregorianCalendar();
         this.fecCad = new GregorianCalendar();
         SimpleDateFormat sdf = new SimpleDateFormat("'d�a' dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss");
         sdf.format(fecFab.getTime());
         sdf.format(fecCad.getTime());
         fecCad.add(GregorianCalendar.YEAR, +1);
- //�Es correcto que vaya el objeto sdf en el constructor?
- //Preguntarle a Antonio cu�l es la diferencia y cu�l est� mejor.
-//        this.fecFab = Calendar.getInstance(); 
-//        this.fecCad = Calendar.getInstance();
-//        fecCad.add(Calendar.YEAR, +1);
     }
 
     public String getNombre() {
@@ -57,7 +47,7 @@ public class Lote implements Comparable<Lote>{
         return p;
     }
 
-    public ArrayList getPpoAct() {
+    public ArrayList<PpoAct> getPpoAct() {
         return ppoAct;
     }
 
@@ -65,7 +55,7 @@ public class Lote implements Comparable<Lote>{
         return udFcdas;
     }
 
-    public tipoLote getTipo() {
+    public TipoLote getTipo() {
         return tipo;
     }
 
