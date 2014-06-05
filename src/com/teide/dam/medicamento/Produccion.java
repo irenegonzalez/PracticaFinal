@@ -4,6 +4,7 @@
  */
 package com.teide.dam.medicamento;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -12,7 +13,7 @@ import java.util.GregorianCalendar;
  *
  * @author Irene
  */
-public class Produccion {
+public class Produccion implements Serializable{
     
    public ArrayList<Lote> listado = new ArrayList<>();
    
@@ -22,14 +23,17 @@ public class Produccion {
     * @return true si algún lote ha sido borrado. Si no ha encontrado lotes caducados, false.
     */
    public boolean limpiarStock (){
-       
+       boolean eliminados = false;
        Collections.sort(listado);
        GregorianCalendar gc = new GregorianCalendar ();
        for (Lote lote : listado) {
            int devuelve = lote.getFecCad().compareTo(gc);
-           if (devuelve ==-1) listado.remove(lote);    
+           if (devuelve ==-1) {
+               listado.remove(lote);
+               eliminados = true;
+           }    
         }
-       return true;
+       return eliminados;
    }
    /**
     * Busca por palabras similares del nombre del Lote la primera ocurrencia. 
@@ -38,8 +42,7 @@ public class Produccion {
     */
    public Lote buscarXNombreLote(String nombreLote){
        
-       Lote aux = new Lote();
-       nombreLote=aux.getNombre();
+       Lote aux = new Lote(nombreLote);
        if (listado.contains(aux)) return listado.get(listado.indexOf(aux));
        else return null;    
    }  
@@ -50,8 +53,8 @@ public class Produccion {
     */
    public ArrayList<Lote> buscarXNombrePpo(String nombrePpo){
        
-       PpoAct aux = new PpoAct();
-       nombrePpo=aux.getNomPpoAct();
+       PpoAct aux = new PpoAct(nombrePpo);
+       
        ArrayList<Lote>contenidos=new ArrayList<>();
        for (Lote lote : listado) {
          if (lote.getPpoAct().contains(aux)) contenidos.add(lote);          
@@ -101,10 +104,11 @@ public class Produccion {
                             udTotalesXNombre-=udes;
                         }
                         while(udTotalesXNombre>0);
+                        return true;
                     }
                     else return false;
                 }
-                return true;
+                return false;
             }
             else return false;                 
    }       
@@ -135,7 +139,7 @@ public class Produccion {
            else return false;
     }
    public boolean borrar (String nombre){
-       Lote l = new Lote();
+       Lote l = new Lote(nombre);
        for (Lote lote : listado) {
                   if(buscarXNombreLote(nombre)!=null){
                   listado.remove(l);
@@ -144,5 +148,16 @@ public class Produccion {
        }
        return false;
       
-   }       
+   }
+   
+   
+   @Override
+    public String toString() {
+        String resultado = "";
+        for (Lote lote : listado) {
+            resultado+=lote.toString()+"\n";
+        }
+            return resultado;
+        }
+   
 }

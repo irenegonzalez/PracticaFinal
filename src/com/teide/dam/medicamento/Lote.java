@@ -4,15 +4,18 @@
  */
 package com.teide.dam.medicamento;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 
 /**
  *
  * @author Irene
  */
-public class Lote implements Comparable<Lote>{
+public class Lote implements Comparable<Lote>, Serializable{
     private String nombre;
     private double p;
     public enum TipoLote {conReceta, sinReceta};
@@ -25,6 +28,12 @@ public class Lote implements Comparable<Lote>{
     public Lote() {
     }
 
+    public Lote(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+
     public Lote(String nombre, int udFcdas, ArrayList ppoAct, TipoLote tipo, double p) {
         this.nombre = nombre;
         this.udFcdas = udFcdas;
@@ -33,21 +42,8 @@ public class Lote implements Comparable<Lote>{
         this.p=p;
         this.fecFab = new GregorianCalendar();
         this.fecCad = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("'d�a' dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss");
-        sdf.format(fecFab.getTime());
-        sdf.format(fecCad.getTime());
         fecCad.add(GregorianCalendar.YEAR, +1);
     }
-
-    public Lote(String nombre, TipoLote tipo) {
-        this.nombre = nombre;
-        this.tipo = tipo;
-    }
-    
-    public Lote(String nombre) {
-        this.nombre = nombre;
-    }
-    
 
     public String getNombre() {
         return nombre;
@@ -99,5 +95,17 @@ public class Lote implements Comparable<Lote>{
     public int compareTo(Lote o) {
         return o.fecCad.compareTo(fecCad);
     }  
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("'d�a' dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss");
+        return "Lote: "+nombre+" Precio: "+p+ " Unidades fabricadas: "+udFcdas+" Principio activo: "+ppoAct.toString()+" Tipo: "+tipo+" Fecha de fabricación: "+sdf.format(fecFab.getTime())+" Fecha de caducidad: "+sdf.format(fecCad.getTime());
+    }
+
+    
+        
+    
+         
+    
     
 }

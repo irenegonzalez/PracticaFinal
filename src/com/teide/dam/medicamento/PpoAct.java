@@ -4,11 +4,13 @@
  */
 package com.teide.dam.medicamento;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Irene
  */
-public class PpoAct {
+public class PpoAct implements Serializable{
     private  String nomPpoAct;
     private  double mg;
 
@@ -18,6 +20,10 @@ public class PpoAct {
     public PpoAct(String nomPpoAct, double mg) {
         this.nomPpoAct = nomPpoAct;
         this.mg = mg;
+    }
+
+    public PpoAct(String nomPpoAct) {
+        this.nomPpoAct = nomPpoAct;
     }
 
     public String getNomPpoAct() {
@@ -43,5 +49,11 @@ public class PpoAct {
         return nomPpoAct.contains(p.nomPpoAct);
     } 
 
+    @Override
+    public String toString() {
+        return "Nombre del principio: "+nomPpoAct+"Cantidad de mg: "+mg;
+    }
+          
+          
 
 }
