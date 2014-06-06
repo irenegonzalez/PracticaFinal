@@ -80,9 +80,8 @@ public class Produccion implements Serializable{
                    if (l.getP()!=lote.getP()) lote.setP(l.getP());
                }              
            }
-           listado.add(l);
        }
-       else listado.add(l);
+       listado.add(l);
        return true;
    }     
    
@@ -93,51 +92,41 @@ public class Produccion implements Serializable{
     */
    public boolean venderXNombreLote(String nombreLote, int udes){//En el Ejecuta calcular el coste y comprobar si es con receta y si sí, preguntar al user si la tiene.
          
-           if (buscarXNombreLote(nombreLote)!=null) {
+           Lote aux=buscarXNombreLote(nombreLote);
+           if (aux!=null) {
                int udTotalesXNombre=0;
-               Lote aux=buscarXNombreLote(nombreLote);
+               
                for (Lote lote : listado) {
-                    if (listado.equals(aux)) udTotalesXNombre+=aux.getUdFcdas();
-                    if (udTotalesXNombre>=udes){
-                        do{
-                            lote.setUdFcdas(lote.getUdFcdas()-udes);
-                            udTotalesXNombre-=udes;
+                    if (lote.getNombre().equals(aux.getNombre())) udTotalesXNombre+=lote.getUdFcdas();
+               }
+               if (udTotalesXNombre>=udes){
+                   int i =0;
+                   do{
+                       Lote lote = listado.get(i);
+                       if (lote.getNombre().equals(aux.getNombre())) {
+                           if (lote.getUdFcdas() < udes) {
+                               listado.remove(i);
+                               i--;
+                           }
+                           else lote.setUdFcdas(lote.getUdFcdas()-udes);
+                           udes-=lote.getUdFcdas();
                         }
-                        while(udTotalesXNombre>0);
-                        return true;
+                        i++;
                     }
-                    else return false;
+                    while(udes>0);
+                    return true;
                 }
-                return false;
+               else return false;
             }
-            else return false;                 
-   }       
+            else return false;
+    }
+             
     /**
     * Busca si hay stock en los lotes que contengan ese principio activo, en su caso escoge los lotes que caducan antes, y va restando unidades 
     * @param nombrePrincipio El nombre de un principio activo proporcionadas por el usuario.
     * @param udes Las unidades a vender proporcionadas por el ususario.
     */      
-    public boolean venderXNombrePpo(String nombrePpo, int udes){//En el Ejecuta calcular el coste y comprobar si es con receta y si sí, preguntar al user si la tiene.
-         
-           if (buscarXNombrePpo(nombrePpo).size()!=0) {
-               int udTotalesXNombre=0;
-               ArrayList<Lote>contenidos = buscarXNombrePpo(nombrePpo);
-               for (int i = 0; i < contenidos.size(); i++) {
-                   if (contenidos.get(i).getPpoAct().get(0).equals(nombrePpo)){
-                       if (udTotalesXNombre>=udes){
-                            do{
-                                contenidos.get(i).setUdFcdas(contenidos.get(i).getUdFcdas()-udes);
-                                udTotalesXNombre-=udes;
-                            }
-                            while(udTotalesXNombre>0);
-                        }
-                        else return false;
-                   }                   
-               }
-               return true;
-           } 
-           else return false;
-    }
+
    public boolean borrar (String nombre){
        Lote l = new Lote(nombre);
        for (Lote lote : listado) {
