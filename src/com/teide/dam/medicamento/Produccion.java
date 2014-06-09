@@ -43,9 +43,12 @@ public class Produccion implements Serializable{
    public Lote buscarXNombreLote(String nombreLote){
        
        Lote aux = new Lote(nombreLote);
+       for (Lote lote : listado) {
+           if(lote.getNombre().equals(aux.getNombre())) return lote;
+       }
        if (listado.contains(aux)) return listado.get(listado.indexOf(aux));
-       else return null;    
-   }  
+       else return null;
+  }  
    /**
     * Busca un principio activo, en cada uno de los Lotes existentes, por palabras similares del nombre de principio activo. 
     * @param nombrePpo La cadena con un texto similar al nombre del principio activo a buscar.
@@ -56,7 +59,7 @@ public class Produccion implements Serializable{
        PpoAct aux = new PpoAct(nombrePpo);
        
        ArrayList<Lote>contenidos=new ArrayList<>();
-       for (Lote lote : listado) {
+       for (Lote lote : listado) {          
          if (lote.getPpoAct().contains(aux)) contenidos.add(lote);          
        }
        return contenidos;    

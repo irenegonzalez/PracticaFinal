@@ -88,7 +88,8 @@ public class Lote implements Comparable<Lote>, Serializable{
       @Override 
     public boolean equals(Object obj) {
         Lote l = (Lote) obj;
-        return nombre.contains(l.nombre);
+        System.out.println("Comparando "+nombre+" con "+l.nombre+ ": "+nombre.contains(l.nombre));
+        return l.nombre.contains(nombre);
     }  
       
          @Override
@@ -98,7 +99,7 @@ public class Lote implements Comparable<Lote>, Serializable{
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("'d�a' dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("'dia' dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss");
         return "Lote: "+nombre+" Precio: "+p+ " Unidades fabricadas: "+udFcdas+" Principio activo: "+ppoAct.toString()+" Tipo: "+tipo+" Fecha de fabricación: "+sdf.format(fecFab.getTime())+" Fecha de caducidad: "+sdf.format(fecCad.getTime());
     }
 

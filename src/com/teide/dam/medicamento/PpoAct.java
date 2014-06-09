@@ -46,12 +46,12 @@ public class PpoAct implements Serializable{
           @Override 
     public boolean equals(Object obj) {
         PpoAct p = (PpoAct) obj;
-        return nomPpoAct.contains(p.nomPpoAct);
+        return p.nomPpoAct.contains(nomPpoAct);
     } 
 
     @Override
     public String toString() {
-        return "Nombre del principio: "+nomPpoAct+"Cantidad de mg: "+mg;
+        return "Nombre del principio: "+nomPpoAct+" Cantidad de mg: "+mg;
     }
           
           
