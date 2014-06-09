@@ -52,8 +52,5 @@ public class PpoAct implements Serializable{
     @Override
     public String toString() {
         return "Nombre del principio: "+nomPpoAct+" Cantidad de mg: "+mg;
-    }
-          
-          
-
+    }        
 }

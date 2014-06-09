@@ -133,7 +133,7 @@ public class Produccion implements Serializable{
    public boolean borrar (String nombre){
        Lote l = new Lote(nombre);
        for (Lote lote : listado) {
-                  if(buscarXNombreLote(nombre)!=null){
+                 if (lote.getNombre().equals(l.getNombre())){
                   listado.remove(l);
                   return true;
                   }                                 
@@ -151,5 +151,4 @@ public class Produccion implements Serializable{
         }
             return resultado;
         }
-   
 }
