@@ -142,8 +142,6 @@ public class Ejecuta {
                 }
             }
 
-
-
         } while (opcion != 6);
         try {
             util.write(p);
